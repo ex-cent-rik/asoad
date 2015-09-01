@@ -1,22 +1,21 @@
 package tests;
 
-import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import pageObject.homePage;
-import setup.Setup;
 import pageObject.loginPage;
-import org.junit.Assert;
+import pageObject.searchPage;
+import setup.Setup;
 
 /**
- * Created by ad on 22.06.2015.
+ * Created by ashevtsov on 26.08.2015.
  */
-public class login {
-
+public class search {
     public static final String login = "p8admin";
     public static final String pass = "Pp1234567";
+    public static final String searchText = "Антонюк";
     private static WebDriver driver;
 
     @Before
@@ -34,15 +33,15 @@ public class login {
         Assert.assertEquals("FileNet Workplace XT - Browse", j);
     }
 
+
     @Test
+    public void search() {
 
-    public void logout () {
-        homePage page = PageFactory.initElements(driver, homePage.class);
-        page.logout();
+        searchPage page = PageFactory.initElements(driver, searchPage.class);
+        page.search(searchText);
         String i= driver.getTitle();
-        Assert.assertEquals("IBM FileNet Workplace XT Log in", i);
+        Assert.assertEquals("FileNet Workplace XT - Search", i);
+//        String y= driver.getTitle();
+//        Assert.assertTrue(page.searhResult);
     }
-
-//     @After
-//      public void tearDown() {driver.close();}
 }
