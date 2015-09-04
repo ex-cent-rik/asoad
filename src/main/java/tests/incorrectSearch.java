@@ -1,23 +1,24 @@
 package tests;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import pageObject.homePage;
-import setup.Setup;
 import pageObject.loginPage;
-import org.junit.Assert;
+import pageObject.searchPage;
+import setup.Setup;
 
 /**
- * Created by ad on 22.06.2015.
+ * Created by ashevtsov on 04.09.2015.
  */
-public class login {
-
+public class incorrectSearch {
     public static final String login = "p8admin";
     public static final String pass = "Pp1234567";
+    public static final String searchText = "grgb";
     private static WebDriver driver;
 
     @Before
@@ -25,28 +26,31 @@ public class login {
         driver = Setup.getDriver();
     }
 
-    @Test
+
+    @Before
     public void autorization() {
 
         loginPage page = PageFactory.initElements(driver, loginPage.class);
         page.login(login);
         page.pass(pass);
+    }
 
-        String j= driver.getTitle();
-        Assert.assertEquals("FileNet Workplace XT - Browse", j);
-        String t=driver.findElement(By.id("loggedInUser")).getText();
-        Assert.assertEquals("Logged in as: P8admin", t);
+
+    @Test
+    public void incorrectSearch() {
+
+        searchPage page = PageFactory.initElements(driver, searchPage.class);
+        page.search(searchText);
+        boolean isSearchResultEmpty = driver.findElement(By.id("FORM:SIMPLE_SEARCH_RESULT_LIST_noItems")).isDisplayed();
+        Assert.assertTrue(isSearchResultEmpty);
+        String t=driver.findElement(By.id("FORM:SIMPLE_SEARCH_RESULT_LIST_noItems")).getText();
+        Assert.assertEquals("No items found", t);
+
     }
 
     @After
-
     public void logout () {
         homePage page = PageFactory.initElements(driver, homePage.class);
         page.logout();
-        String i= driver.getTitle();
-        Assert.assertEquals("IBM FileNet Workplace XT Log in", i);
     }
-
-//     @After
-//      public void tearDown() {driver.close();}
 }

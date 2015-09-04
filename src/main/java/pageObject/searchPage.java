@@ -14,6 +14,7 @@ public class searchPage {
     @FindBy(id = "FORM:FnSimpleSearch_objectType_folder")
     WebElement checkBoxFolder;
 
+
     @FindBy(id = "FORM:VIEW_search")
     WebElement switchToSearch;
 
@@ -35,7 +36,7 @@ public class searchPage {
         driver.get(ASOAD_logout);
         switchToSearch.click();
         searchField.sendKeys(s);
-        checkBoxFolder.click();
+    //    checkBoxFolder.click();
         searchBtn.click();
 
     }
